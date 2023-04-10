@@ -1,0 +1,14 @@
+p {
+    color: red;
+    background-color: black;
+}
+
+h1 {
+    color: rgb(155,155,155);
+    background-color: black;
+}
+
+.big-red {
+    color: #13F25F;
+    font-size: 20pt
+}
