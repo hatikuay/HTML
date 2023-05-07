@@ -7,7 +7,7 @@ db = SQLAlchemy()
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:\\tmp\\test.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:\\tmp\\book.db'
     db.init_app(app)
     app.app_context().push() # <-- Add this line
     

@@ -13,6 +13,7 @@ class Book(db.Model):
     
     def to_dict(self):
         book_dict = {
+            "id":self.id,
             "title": self.title,
             "author": self.author,
             "publication_year": self.publication_year,
