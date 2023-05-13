@@ -77,14 +77,16 @@ def api_books_create():
     author = request.form.get("author")
        
     if title and publication_year and author:
-        new_book = Book(
+        """new_book = Book(
             title=title,
             publication_year=publication_year,
             author=author
         ) 
         db.session.add(new_book)
-        db.session.commit()
-        return jsonify(new_book.to_dict())
+        db.session.commit()"""
+        return jsonify(Book.create_book(title=title,
+            publication_year=publication_year,
+            author=author))#new_book.to_dict())
     return jsonify({"message": "data missing"})
 
 @book_store.route("/api/books/update", methods = ["POST"])
@@ -95,7 +97,8 @@ def api_books_update():
         if book:
             book.title = request.form.get("title", book.title)
             book.release_year = request.form.get("publication_year", book.publication_year)
-            book.director = request.form.get("author", book.author)
+            book.author = request.form.get("author", book.author)
+            book.inventory = request.form.get("author", book.inventory)
             db.session.commit()
             return jsonify(book.to_dict())
         return jsonify({"message": "not found"})
