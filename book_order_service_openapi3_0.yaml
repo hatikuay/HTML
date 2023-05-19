@@ -1,0 +1,37 @@
+openapi: 3.0.0
+info:
+  title: Book Order Service API
+  version: 1.0.0
+paths:
+  /api/books/orders:
+    post:
+      summary: Place a book order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookOrderRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderPlacedResponse'
+components:
+  schemas:
+    BookOrderRequest:
+      type: object
+      properties:
+        book_id:
+          type: integer
+        quantity_ordered:
+          type: integer
+    OrderPlacedResponse:
+      type: object
+      properties:
+        message:
+          type: string
+
+ 
