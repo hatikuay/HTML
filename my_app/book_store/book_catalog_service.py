@@ -4,27 +4,9 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from my_app.book_store.models import Book, Inventory, BookOrder
 
-book_store = Blueprint('book_store', __name__)
+book_catalog_service = Blueprint('book_catalog_service', __name__)
 
-@book_store.route('/')
-@book_store.route('/home')
-def home():
-    return "Welcome to the Book Store."
-
-@book_store.route("/api/test")
-def api_test():
-    data = {"text": "hello"}
-    return jsonify(data)
-
-@book_store.route("/api/time")
-def api_time():
-    now = datetime.now()
-    current_time = now.strftime("%H:%M:%S")
-    data = {"current_time": current_time}
-    return jsonify(data)
-
-
-@book_store.route("/api/books/read")
+@book_catalog_service.route("/api/books/read")
 def read():
     id = request.args.get("id")
     if id:
@@ -56,7 +38,7 @@ def read():
     return jsonify(books_list)
 
 
-@book_store.route("/api/books/delete")
+@book_catalog_service.route("/api/books/delete")
 def api_books_delete():
     id = request.args.get("id")
     if id:
@@ -70,7 +52,7 @@ def api_books_delete():
     else:
         return jsonify({"message": "no ID given"})
 
-@book_store.route("/api/books/create", methods = ["POST"])
+@book_catalog_service.route("/api/books/create", methods = ["POST"])
 def api_books_create():
     title = request.form.get("title")
     publication_year = request.form.get("publication_year")
@@ -89,7 +71,7 @@ def api_books_create():
             author=author))#new_book.to_dict())
     return jsonify({"message": "data missing"})
 
-@book_store.route("/api/books/update", methods = ["POST"])
+@book_catalog_service.route("/api/books/update", methods = ["POST"])
 def api_books_update():
     id = request.args.get("id")
     if id:
@@ -103,16 +85,3 @@ def api_books_update():
             return jsonify(book.to_dict())
         return jsonify({"message": "not found"})
     return jsonify({"message": "no ID sent"})
-
-@book_store.route("/api/books/orders", methods = ["POST"])
-def api_books_orders():
-    data = request.json
-    book_id = data.get("book_id")
-    quantity_ordered = data.get("quantity_ordered")
-    
-    order = BookOrder(book_id=book_id,quantity_ordered=quantity_ordered)
-    order.save()
-    
-    response = {"message": "Order placed successfully."}
-    return jsonify(response), 201
-

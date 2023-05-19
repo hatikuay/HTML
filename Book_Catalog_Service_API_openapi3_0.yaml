@@ -1,0 +1,153 @@
+openapi: 3.0.0
+info:
+  title: Book Catalog Service API
+  version: 1.0.0
+paths:
+  /api/books/read:
+    get:
+      summary: Get book(s) by ID, title, publication year, or author
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: integer
+          description: ID of the book to retrieve
+        - in: query
+          name: title
+          schema:
+            type: string
+          description: Title of the book(s) to retrieve
+        - in: query
+          name: publication_year
+          schema:
+            type: integer
+          description: Publication year of the book(s) to retrieve
+        - in: query
+          name: author
+          schema:
+            type: string
+          description: Author of the book(s) to retrieve
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+  /api/books/delete:
+    get:
+      summary: Delete a book by ID
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: integer
+          description: ID of the book to delete
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '404':
+          description: Book not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /api/books/create:
+    post:
+      summary: Create a new book
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewBook'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /api/books/update:
+    post:
+      summary: Update a book by ID
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: integer
+          description: ID of the book to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBook'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '404':
+          description: Book not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+components:
+  schemas:
+    Book:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        publication_year:
+          type: integer
+        author:
+          type: string
+    NewBook:
+      type: object
+      properties:
+        title:
+          type: string
+        publication_year:
+          type: integer
+        author:
+          type: string
+    UpdateBook:
+      type: object
+      properties:
+        title:
+          type: string
+        publication_year:
+          type: integer
+        author:
+          type: string
+        inventory:
+          type: integer
+

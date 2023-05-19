@@ -40,7 +40,7 @@ class Book(db.Model):
 
 class Inventory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    book_id = db.Column(db.Integer, db.ForeginKey('book.id'), nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     available_quantity = db.Column(db.Integer, nullable=False, default=0)
 
@@ -68,7 +68,7 @@ class Inventory(db.Model):
 
 class BookOrder(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    book_id = db.Column(db.Integer, db.ForeginKey('book.id'), nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
     quantity_ordered = db.Column(db.Integer, nullable=False)
     order_date = db.Column(db.DateTime, nullable=False,
                            default=datetime.utcnow)
