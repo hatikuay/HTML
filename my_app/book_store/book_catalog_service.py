@@ -6,7 +6,7 @@ from my_app.book_store.models import Book, Inventory, BookOrder
 
 book_catalog_service = Blueprint('book_catalog_service', __name__)
 
-@book_catalog_service.route("GET/api/books")
+@book_catalog_service.route("/GET/api/books")
 def read():
     #id = request.args.get("id")
     if id:
@@ -38,7 +38,7 @@ def read():
     return jsonify(books_list)
 
 
-@book_catalog_service.route("DELETE/api/books")
+@book_catalog_service.route("/DELETE/api/books")
 def api_books_delete():
     id = request.args.get("id")
     if id:
@@ -52,7 +52,7 @@ def api_books_delete():
     else:
         return jsonify({"message": "no ID given"})
 
-@book_catalog_service.route("POST/api/books", methods = ["POST"])
+@book_catalog_service.route("/POST/api/books", methods = ["POST"])
 def api_books_create():
     title = request.form.get("title")
     publication_year = request.form.get("publication_year")
@@ -71,7 +71,7 @@ def api_books_create():
             author=author))#new_book.to_dict())
     return jsonify({"message": "data missing"})
 
-@book_catalog_service.route("UPDATE/api/books", methods = ["POST"])
+@book_catalog_service.route("/UPDATE/api/books", methods = ["POST"])
 def api_books_update():
     id = request.args.get("id")
     if id:

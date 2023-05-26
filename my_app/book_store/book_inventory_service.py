@@ -6,7 +6,7 @@ from my_app.book_store.models import Book, Inventory, BookOrder
 
 book_inventory_service = Blueprint('book_inventory_service', __name__)
 
-@book_inventory_service.route("GET/api/books/inventory")
+@book_inventory_service.route("/GET/api/books/inventory")
 def get_inventory():
     book_id = request.args.get("book_id")
     if book_id:
@@ -20,7 +20,7 @@ def get_inventory():
         inventories_list = [inventory.to_dict() for inventory in inventories]
         return jsonify(inventories_list)
 
-@book_inventory_service.route("UPDATE/api/books/inventory", methods = ["POST"])
+@book_inventory_service.route("/UPDATE/api/books/inventory", methods = ["POST"])
 def update_inventory():
     book_id = request.form.get("book_id")
     quantity = request.form.get("quantity")

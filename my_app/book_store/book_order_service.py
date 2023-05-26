@@ -6,7 +6,7 @@ from my_app.book_store.models import Book, Inventory, BookOrder
 
 book_order_service = Blueprint('book_order_service', __name__)
 
-@book_order_service.route("POST/api/books/orders", methods = ["POST"])
+@book_order_service.route("/POST/api/books/orders", methods = ["POST"])
 def api_books_orders():
     data = request.json
     book_id = data.get("book_id")
