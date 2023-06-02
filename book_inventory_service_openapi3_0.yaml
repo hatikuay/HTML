@@ -2,39 +2,56 @@ openapi: 3.0.0
 info:
   title: Book Inventory Service API
   version: 1.0.0
+  description: API for managing book inventories
+servers:
+  - url: http://localhost:5000
 paths:
-  /api/books/inventory:
+  /GET/api/books/inventory:
     get:
-      summary: Get book inventory by book ID or retrieve all inventories
+      summary: Get book inventory
       parameters:
-        - in: query
-          name: book_id
+        - name: book_id
+          in: query
+          description: ID of the book
+          required: false
           schema:
             type: integer
-          description: ID of the book inventory to retrieve
       responses:
         '200':
-          description: OK
+          description: Successful operation
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: '#/components/schemas/Inventory'
-                  - type: array
-                    items:
-                      $ref: '#/components/schemas/Inventory'
-  /api/books/inventory/update:
+                $ref: '#/components/schemas/Inventory'
+        '404':
+          description: Inventory not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+    /UPDATE/api/books/inventory:
     post:
-      summary: Update book inventory by book ID
+      summary: Update book inventory
       requestBody:
         required: true
         content:
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/UpdateInventoryRequest'
+              type: object
+              properties:
+                book_id:
+                  type: integer
+                quantity:
+                  type: integer
+              required:
+                - book_id
+                - quantity
       responses:
         '200':
-          description: OK
+          description: Successful operation
           content:
             application/json:
               schema:
@@ -53,17 +70,16 @@ components:
     Inventory:
       type: object
       properties:
+        id:
+          type: integer
         book_id:
           type: integer
         quantity:
           type: integer
         available_quantity:
           type: integer
-    UpdateInventoryRequest:
-      type: object
-      properties:
-        book_id:
-          type: integer
-        quantity:
-          type: integer
- 
+      required:
+        - id
+        - book_id
+        - quantity
+        - available_quantity

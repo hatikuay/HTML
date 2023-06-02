@@ -1,0 +1,134 @@
+openapi: 3.0.0
+info:
+  title: Book Catalog Service
+  description: API for managing book catalog
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000
+paths:
+  /api/books:
+    get:
+      summary: Get books
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: integer
+          description: Optional book ID
+        - in: query
+          name: title
+          schema:
+            type: string
+          description: Optional book title
+        - in: query
+          name: publication_year
+          schema:
+            type: integer
+          description: Optional publication year
+        - in: query
+          name: author
+          schema:
+            type: string
+          description: Optional author name
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+    post:
+      summary: Create a book
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BookInput'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+  /api/books/{id}:
+    get:
+      summary: Get a book by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Book ID
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+    delete:
+      summary: Delete a book by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Book ID
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+    post:
+      summary: Update a book by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Book ID
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BookInput'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+components:
+  schemas:
+    Book:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        publication_year:
+          type: integer
+        author:
+          type: string
+    BookInput:
+      type: object
+      properties:
+        title:
+          type: string
+        publication_year:
+          type: integer
+        author:
+          type: string
+
