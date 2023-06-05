@@ -15,3 +15,6 @@ movie = response.json()
 
 for x, y in movie.items():
     print('"', x, '"', ":", '"', y, '"', sep="")
+
+
+print()
